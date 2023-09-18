@@ -96,11 +96,11 @@ insert into city values ('4058','Boulder','USA','Colorado','91238');
 insert into city values ('4061','Fall River','USA','Massachusetts','90555');
 
 Q1. Query all columns for all American cities in the CITY table with populations larger than 100000.
-The CountryCode for America is USA.
+    The CountryCode for America is USA.
 --> select * from city where population>100000 and countrycode='USA';
 
 Q2. Query the NAME field for all American cities in the CITY table with populations larger than 120000.
-The CountryCode for America is USA.
+    The CountryCode for America is USA.
 --> select name from city where population >120000 and countrycode='USA';
 
 Q3. Query all columns (attributes) for every row in the CITY table.
@@ -154,7 +154,7 @@ Q9. Find the difference between the total number of CITY entries in the table an
 --> select count(city) - count(distinct city) from station;
 
 Q10. Query the two cities in STATION with the shortest and longest CITY names, as well as their respective lengths (i.e.: number of characters in the name). 
-If there is more than one smallest or largest city, choose the one that comes first when ordered alphabetically.
+     If there is more than one smallest or largest city, choose the one that comes first when ordered alphabetically.
 --> select city,length(city) from station order by length(city) desc,city desc limit 1;
     select city,length(city) from station order by length(city) asc,city asc limit 1;
 
@@ -169,5 +169,40 @@ Q13. Query the list of CITY names from STATION that do not start with vowels. Yo
 
 Q14. Query the list of CITY names from STATION that do not end with vowels. Your result cannot contain duplicates.
 -->  select distinct city from station where upper(substr(city,length(city),1)) not in ('A','E','I','O','U') and lower(substr(city,length(city),1)) not in ('a','e','i','o','u');
+
+Q15. Query the list of CITY names from STATION that either do not start with vowels or do not end with vowels. 
+Your result cannot contain duplicates.
+-->  select distinct CITY from station where upper(substr(CITY,1,1)) not in ('A','E','I','O','U') or lower(substr(CITY,1,1)) not in ('a','e','i','o','u') or upper(substr(CITY,LENGTH(CITY),1)) not in ('A','E','I','O','U') or lower(substr(CITY,LENGTH(CITY),1)) not in ('a','e','i','o','u');
+
+Q16. Query the list of CITY names from STATION that do not start with vowels and do not end with
+vowels. Your result cannot contain duplicates.
+-->  select distinct CITY from station where upper(substr(CITY,1,1)) not in ('A','E','I','O','U') and lower(substr(CITY,1,1)) not in ('a','e','i','o','u') and upper(substr(CITY,LENGTH(CITY),1)) not in ('A','E','I','O','U') and lower(substr(CITY,LENGTH(CITY),1)) not in ('a','e','i','o','u');
+
+create table product
+(
+	product_id int,
+    product_name varchar(30),
+    unit_price int,
+    constraint pk PRIMARY KEY(product_id)
+);
+
+insert into product values(1,'S8',1000),(2,'G4',800),(3,'iPhone',1400);
+
+create table sales
+(
+	seller_id int,
+	product_id int,
+	buyer_id int,
+	sale_date date,
+	quantity int,
+	price int,
+    constraint fk FOREIGN KEY(product_id) references product(product_id)
+);
+
+insert into sales values(1,1,1,'2019-01-21',2,2000),(1,2,2,'2019-02-17',1,800),(2,2,3,'2019-06-02',1,800),(3,3,4,'2019-05-13',2,2800);
+
+Q17. Write an SQL query that reports the products that were only sold in the first quarter of 2019. That is,
+     between 2019-01-01 and 2019-03-31 inclusive.Return the result table in any order.
+-->  
 
 
